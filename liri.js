@@ -3,6 +3,7 @@ require("dotenv").config();
 
 // import key.js file and store into variable
 var keys = require("./keys.js");
+var colors = require('colors');
 
 
 var liriCommand = process.argv[2];
@@ -35,37 +36,57 @@ function movieTime () {
     var movieName = liriSearch;
     var url = `http://www.omdbapi.com/?t=${ movieName }&y=&plot=short&apikey=trilogy`;
         axios.get(url).then(function(response) {
-            if (err) {
-                return console.log('Error occurred: ' + err);
-                } else {
-                    console.log(
-                        "Movie Title: " + response.data.Title +
-                        "\n Release Year: " + response.data.Year +
-                        "\n IMDB Rating: " + response.data.imdbRating +
-                        "\n Production Country: " + response.data.Country +
-                        "\n Language: " + response.data.Language +
-                        "\n Plot: " + response.data.Plot + 
-                        "\n Actors/Actresses: " + response.data.Actors
-                    );
-                };
+            console.log(
+                "Movie Title: ".bold.green + response.data.Title +
+                "\n Release Year: ".bold.green + response.data.Year +
+                "\n IMDB Rating: ".bold.green + response.data.imdbRating +
+                "\n Production Country: ".bold.green + response.data.Country +
+                "\n Language: ".bold.green + response.data.Language +
+                "\n Plot: ".bold.green + response.data.Plot + 
+                "\n Actors/Actresses: ".bold.green + response.data.Actors
+            );
         });
 };
 
 function spotifyTime () {
+    //log artist, song name, preview link from spotify, and album of song
+
     var Spotify = require('node-spotify-api');
 
     // access spotify key
     var spotifyKey = new Spotify(keys.spotify);
     var songName = liriSearch;
 
-    spotifyKey.search({ type: 'track', query: songName, limit: 10 })
+    spotifyKey.search({ type: 'track', query: songName, limit: 10})
     .then(function(response) {
-        for (i = 0; i < response.tracks.items.length; i++)
-        console.log(response.tracks.items[i].album[i]);
-        console.log(response.tracks.items[i].artists[i]);
+        var spotifyResults = response.tracks.items;
+        var count = 1;
+        for (i=0; i < spotifyResults.length; i++){
+            var totArtists = [];
+            Object.values(response.tracks.items[i].artists).forEach((value) => {
+                trackArtist = value.name;
+                totArtists.push(trackArtist);
+            });
+            console.log("------Result #" + count + "------" + "\n")
+            console.log("Track: ".bold.red + response.tracks.items[i].name);
+            console.log("Track Artists: ".bold.red + totArtists);
+            console.log("Album: ".bold.red + response.tracks.items[i].album.name);
+            if (response.tracks.items[i].preview_url == null){
+                console.log("Sorry track preview is not available!".bold.red.underline + "\n")
+            } else {
+                console.log("Preview URL: ".bold.red + response.tracks.items[i].preview_url + "\n");   
+            };
 
+            count++;
+        }
     })
     .catch(function(err) {
       console.log(err);
     });
 }
+
+
+// console.log(response.tracks.items[0].album.name);
+// console.log(response.tracks.items[0].artists[0].name);
+// console.log(response.tracks.items[0].name);
+// console.log(response.tracks.items[0].preview_url);
