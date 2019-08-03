@@ -8,7 +8,7 @@ var ranTxt = require('fs');
 
 
 var liriCommand = process.argv[2];
-var liriSearch = process.argv[3];
+var liriSearch = process.argv.slice(3).join(' ');;
 //add switch case function for node commands:
 switch (liriCommand) {
     case 'concert-this':
