@@ -33,19 +33,25 @@ switch (liriCommand) {
 
 //function that looks up concerts and prints information on CML
 function concertTime () {
+    var moment = require('moment');
     var axios = require('axios');
     var artist = liriSearch;
+    var count = 1;
+
     var url = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
         axios.get(url).then(function(response) {
-            console.log(response);
-            //     "Movie Title: ".bold.green + response.data.Title +
-            //     + "\n Release Year: ".bold.green + response.data.Year 
-            //     + "\n IMDB Rating: ".bold.green + response.data.imdbRating 
-            //     + "\n Production Country: ".bold.green + response.data.Country 
-            //     + "\n Language: ".bold.green + response.data.Language 
-            //     + "\n Plot: ".bold.green + response.data.Plot 
-            //     + "\n Actors/Actresses: ".bold.green + response.data.Actors
-            // );
+            // console.log(response.data[0]);
+            for (i=0; i < response.data.length; i++){
+                var date = moment(response.data[i].datetime).format('MMMM Do YYYY');
+                console.log("\n------Concert Result #" + count + "------" 
+                    + "\nName of Venue: ".red + response.data[i].venue.name
+                    + "\nVenue Location ".red + response.data[i].venue.city + ", " + response.data[i].venue.country
+                    + "\nConcert Date ".red + date
+                );
+
+                count++;
+            };
+
         });
 };
 
@@ -125,16 +131,16 @@ function randomCommand (){
         };
 
         var liriCommand = ranCmd[0];
-        var liriSearch = ranCmd[1];
+        liriSearch = ranCmd[1];
 
-        console.log('I think it worked? ' + liriCommand + " " + liriSearch);
+        console.log('Random Command '.red + liriCommand + " " + liriSearch);
 
         if(liriCommand === 'concert-this'){
-            concertTime(liriSearch);
+            concertTime();
         } else if (liriCommand === 'spotify-this-song'){
-            spotifyTime(liriSearch);
+            spotifyTime();
         } else if (liriCommand === 'movie-this') {
-            movieTime(liriSearch);
+            movieTime();
         };
         
 
