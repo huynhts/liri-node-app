@@ -28,7 +28,7 @@ switch (liriCommand) {
         //add function to read cmd from text
         break;
     default: 
-        console.log('Sorry, that command is not available at this time. Please try another command.');
+        console.log('Sorry, either you have not entered a command or that command is not available at this time. Please try another command.');
 };
 
 //function that looks up concerts and prints information on CML
