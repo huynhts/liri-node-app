@@ -13,10 +13,10 @@ This app is organized using a switch case that takes in the user command and cal
 Instructions to Run App:
 
 Users have the choice of specific commands:
-> to search for a concert: "concert-this"
-> to search a song: "spotify-this-song"
-> to search for a movie: "movie-this"
-> for a fun random command: "do-what-it-says"
+-> to search for a concert: "concert-this"
+-> to search a song: "spotify-this-song"
+-> to search for a movie: "movie-this"
+-> for a fun random command: "do-what-it-says"
 
 ---> Users can enter in "node liri.js" and type in a specific command from the list above, then enter an artist, song, or movie.
 
