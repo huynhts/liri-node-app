@@ -2,8 +2,6 @@
 
 LIRI BOT!!!
 
-Video Link: https://vimeo.com/351732817
-
 App Functionaility:
 This app has a buit in search function that is accessed using the command line in order to look up information on movies, music tracks, and concerts.
 
